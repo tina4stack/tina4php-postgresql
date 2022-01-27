@@ -10,7 +10,7 @@ namespace Tina4;
 /**
  * Queries the Firebird database and returns back results
  */
-class PosgresqlQuery extends DataConnection implements DataBaseQuery
+class PostgresqlQuery extends DataConnection implements DataBaseQuery
 {
     /**
      * Runs a query against the database and returns a DataResult
@@ -48,7 +48,7 @@ class PosgresqlQuery extends DataConnection implements DataBaseQuery
 
         $records = null;
         while ($record = pg_fetch_assoc($recordCursor)) {
-            //$record = (new PosgresBlobHandler($this->getConnection()))->decodeBlobs($record);
+            $record = (new PostgresqlBlobHandler($this->getConnection()))->decodeBlobs($record);
             $records[] = (new DataRecord(
                 $record,
                 $fieldMapping,

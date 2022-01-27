@@ -85,7 +85,7 @@ class DataPostgresql implements DataBase
      */
     final public function fetch($sql, int $noOfRecords = 10, int $offSet = 0, array $fieldMapping = []): ?DataResult
     {
-        return (new PosgresqlQuery($this))->query($sql, $noOfRecords, $offSet, $fieldMapping);
+        return (new PostgresqlQuery($this))->query($sql, $noOfRecords, $offSet, $fieldMapping);
     }
 
     /**

@@ -1,4 +1,4 @@
-# tina4php-firebird
+# tina4php-postgresql
 
 ### Installation
 ```

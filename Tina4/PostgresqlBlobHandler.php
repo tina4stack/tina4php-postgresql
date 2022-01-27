@@ -10,7 +10,7 @@ namespace Tina4;
 /**
  * Fetches blob data from the database
  */
-class PosgresBlobHandler extends DataConnection
+class PostgresqlBlobHandler extends DataConnection
 {
     /**
      * Decodes the blobs for a returned record

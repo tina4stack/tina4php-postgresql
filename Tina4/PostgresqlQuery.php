@@ -44,8 +44,7 @@ class PostgresqlQuery extends DataConnection implements DataBaseQuery
         } else {
             $recordCursor = pg_query($this->getDbh(), $sql);
         }
-
-
+        
         $records = null;
         while ($record = pg_fetch_assoc($recordCursor)) {
             $record = (new PostgresqlBlobHandler($this->getConnection()))->decodeBlobs($record);

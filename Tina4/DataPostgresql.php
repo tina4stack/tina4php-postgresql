@@ -99,7 +99,7 @@ class DataPostgresql implements DataBase
         if (!empty($errorMessage)) {
             $errorCode = "01";
         } else {
-            $errorMessage = "None";
+            $errorMessage = null;
         }
 
         return (new DataError($errorCode, $errorMessage));
@@ -141,7 +141,7 @@ class DataPostgresql implements DataBase
      */
     final public function startTransaction()
     {
-        return false;
+        return "Resource id #";
     }
 
     /**
@@ -197,18 +197,19 @@ class DataPostgresql implements DataBase
      */
     final public function getDefaultDatabasePort(): int
     {
-        return 3050;
+        return 5432;
     }
 
     /**
-     * Specific to firebird generators
-     * @param string $generatorName
-     * @param int $increment
+     * Returns back the correct param type convention for parameterised queries
+     * Default is normally ?
+     * @param string $fieldName
+     * @param int $fieldIndex
      * @return mixed
      */
-    final public function getGeneratorId(string $generatorName, int $increment = 1)
+    final public function getQueryParam(string $fieldName, int $fieldIndex): string
     {
-        return ibase_gen_id(strtoupper($generatorName), $increment, $this->dbh);
+        return "\${$fieldIndex}";
     }
 
     /**

@@ -16,7 +16,7 @@ class DataPostgresqlTest extends TestCase
 
     final public function setUp(): void
     {
-        $this->connectionString = "localhost/54321:postgres";
+        $this->connectionString = "localhost/5432:postgres";
               $this->DBA = new \Tina4\DataPostgresql($this->connectionString, "postgres", "pass1234");
     }
 
@@ -82,5 +82,17 @@ class DataPostgresqlTest extends TestCase
         $database = $this->DBA->getDatabase();
         $this->assertArrayHasKey("testing", $database);
         $this->assertArrayHasKey("sub_testing", $database);
+    }
+
+    final public function testBlob(): void
+    {
+        if ($this->DBA->tableExists("blob_test")) {
+            $error = $this->DBA->exec("drop table blob_test");
+         }
+
+        $this->DBA->exec("create table blob_test (id integer default 0 not null, test_blob bytea, primary key(id))");
+
+        $this->DBA->exec("insert into blob_test(id, test_blob) values (1, \$1)", "Some Blob Data");
+
     }
 }

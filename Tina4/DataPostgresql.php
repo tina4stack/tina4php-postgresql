@@ -99,7 +99,7 @@ class DataPostgresql implements DataBase
         if (!empty($errorMessage)) {
             $errorCode = "01";
         } else {
-            $errorMessage = null;
+            $errorMessage = "";
         }
 
         return (new DataError($errorCode, $errorMessage));

@@ -23,7 +23,7 @@
     "phpmetrics": "phpmetrics --report-html=phpmetrics --junit=tests/junit.xml ./Tina4"
   },
   "require": {
-    "tina4stack/tina4php-database": "^1.0",
+    "tina4stack/tina4php-database": "^2.0",
     "ext-pgsql" : "*"
   }
 }

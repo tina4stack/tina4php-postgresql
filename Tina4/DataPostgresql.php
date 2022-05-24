@@ -220,4 +220,13 @@ class DataPostgresql implements DataBase
     {
         return false;
     }
+
+    /**
+     * Get a short name for the database used for specific database migrations
+     * @return string
+     */
+    public function getShortName(): string
+    {
+        return "postgresql";
+    }
 }

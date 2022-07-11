@@ -95,7 +95,7 @@ class DataPostgresql implements DataBase
     final public function error(): DataError
     {
         $errorCode = "";
-        $errorMessage = pg_errormessage($this->dbh);
+        $errorMessage = pg_last_error($this->dbh);
         if (!empty($errorMessage)) {
             $errorCode = "01";
         } else {

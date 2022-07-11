@@ -20,6 +20,9 @@ class PostgresqlBlobHandler extends DataConnection
     final public function decodeBlobs($record)
     {
         foreach ($record as $key => $value) {
+            if (empty($value)){
+                continue;
+            }
             if (strpos($value, "0x") === 0) { //@todo how to know if blob ?
                 pg_query($this->getDbh(), "begin");
                 $handle = pg_lo_open($this->getDbh(), $key, "r");
@@ -33,6 +36,7 @@ class PostgresqlBlobHandler extends DataConnection
                 pg_query($this->getDbh(), "commit");
                 $record[$key] = $content;
             }
+
         }
 
         return $record;

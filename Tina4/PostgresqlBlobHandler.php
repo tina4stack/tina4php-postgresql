@@ -20,21 +20,23 @@ class PostgresqlBlobHandler extends DataConnection
     final public function decodeBlobs($record)
     {
         foreach ($record as $key => $value) {
-            if ($value != null){
-                if (strpos($value, "0x") === 0) { //@todo how to know if blob ?
-                    pg_query($this->getDbh(), "begin");
-                    $handle = pg_lo_open($this->getDbh(), $key, "r");
-                    //Find the end of the blob
-                    pg_lo_seek($handle, 0, PGSQL_SEEK_END);
-                    $size = pg_lo_tell($handle);
-                    //Find the beginning of the blob
-                    pg_lo_seek($handle, 0, PGSQL_SEEK_SET);
-                    //Read the whole blob
-                    $content = pg_lo_read($handle, $size);
-                    pg_query($this->getDbh(), "commit");
-                    $record[$key] = $content;
-                }
+            if (empty($value)){
+                continue;
             }
+            if (strpos($value, "0x") === 0) { //@todo how to know if blob ?
+                pg_query($this->getDbh(), "begin");
+                $handle = pg_lo_open($this->getDbh(), $key, "r");
+                //Find the end of the blob
+                pg_lo_seek($handle, 0, PGSQL_SEEK_END);
+                $size = pg_lo_tell($handle);
+                //Find the beginning of the blob
+                pg_lo_seek($handle, 0, PGSQL_SEEK_SET);
+                //Read the whole blob
+                $content = pg_lo_read($handle, $size);
+                pg_query($this->getDbh(), "commit");
+                $record[$key] = $content;
+            }
+
         }
 
         return $record;

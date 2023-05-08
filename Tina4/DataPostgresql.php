@@ -132,7 +132,7 @@ class DataPostgresql implements DataBase
      */
     final public function autoCommit(bool $onState = false): void
     {
-        //Firebird has commit off by default
+        //Postgres has commit off by default
     }
 
     /**

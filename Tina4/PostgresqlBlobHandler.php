@@ -20,7 +20,7 @@ class PostgresqlBlobHandler extends DataConnection
     final public function decodeBlobs($record)
     {
         foreach ($record as $key => $value) {
-            if (empty($value)) {
+            if (empty($value)){
                 continue;
             }
             if (strpos($value, "0x") === 0) { //@todo how to know if blob ?

@@ -128,7 +128,7 @@ class DataPostgresql implements DataBase
     /**
      * Auto commit on for Firebird
      * @param bool $onState
-     * @return bool|void
+     * @return void
      */
     final public function autoCommit(bool $onState = false): void
     {

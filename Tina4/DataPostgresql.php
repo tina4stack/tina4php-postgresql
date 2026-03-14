@@ -229,4 +229,13 @@ class DataPostgresql implements DataBase
     {
         return "postgresql";
     }
+
+    /**
+     * Whether this database supports the RETURNING clause on INSERT statements
+     * @return bool
+     */
+    public function supportsReturning(): bool
+    {
+        return true;
+    }
 }

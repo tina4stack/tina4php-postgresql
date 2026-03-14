@@ -12,6 +12,8 @@ namespace Tina4;
  */
 class PostgresqlMetaData extends DataConnection implements DataBaseMetaData
 {
+    use DataBaseMetaDataHelper;
+
     /**
      * Get all the tables for the database
      * @return array
@@ -47,17 +49,9 @@ class PostgresqlMetaData extends DataConnection implements DataBaseMetaData
 
 
 
-        $primaryKeys = $this->getPrimaryKeys($tableName);
-        $primaryKeyLookup = [];
-        foreach ($primaryKeys as $primaryKey) {
-            $primaryKeyLookup[$primaryKey->fieldName] = true;
-        }
-
-        $foreignKeys = $this->getForeignKeys($tableName);
-        $foreignKeyLookup = [];
-        foreach ($foreignKeys as $foreignKey) {
-            $foreignKeyLookup[$foreignKey->fieldName] = true;
-        }
+        $keyLookups = $this->buildKeyLookups($tableName);
+        $primaryKeyLookup = $keyLookups['primary'];
+        $foreignKeyLookup = $keyLookups['foreign'];
 
         foreach ($columns as $columnIndex => $columnData) {
 
@@ -90,24 +84,6 @@ class PostgresqlMetaData extends DataConnection implements DataBaseMetaData
         }
 
         return $tableInformation;
-    }
-
-    /**
-     * Gets the complete database metadata
-     * @return array
-     */
-    final public function getDatabaseMetaData(): array
-    {
-        $database = [];
-        $tables = $this->getTables();
-
-        foreach ($tables as $record) {
-            $tableInfo = $this->getTableInformation($record->tableName);
-
-            $database[strtolower($record->tableName)] = $tableInfo;
-        }
-
-        return $database;
     }
 
     /**

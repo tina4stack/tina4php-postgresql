@@ -3,9 +3,6 @@
   "description": "Tina4 PHP Postgresql Database Driver",
   "license": "MIT",
   "autoload": {
-    "classmap": [
-      "Tina4/"
-    ],
     "psr-4": {
       "Tina4\\": [
         "Tina4/"
@@ -23,6 +20,7 @@
     "phpmetrics": "phpmetrics --report-html=phpmetrics --junit=tests/junit.xml ./Tina4"
   },
   "require": {
+        "php": ">=8.1",
     "tina4stack/tina4php-database": "^2.0",
     "ext-pgsql" : "*"
   }

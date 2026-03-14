@@ -8,7 +8,7 @@
 namespace Tina4;
 
 /**
- * Queries the Firebird database and returns back results
+ * Queries the PostgreSQL database and returns back results
  */
 class PostgresqlQuery extends DataConnection implements DataBaseQuery
 {

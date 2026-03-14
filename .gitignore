@@ -5,3 +5,5 @@
 /tests/junit.xml
 /.php-cs-fixer.cache
 /tina4php-postgresql.iml
+.phpunit.cache
+.claude/

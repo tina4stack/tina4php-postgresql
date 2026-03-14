@@ -9,7 +9,7 @@ namespace Tina4;
 
 /**
  * DataPostgresql
- * The implementation for the firebird database engine
+ * The implementation for the PostgreSQL database engine
  * @package Tina4
  */
 class DataPostgresql implements DataBase
@@ -22,7 +22,7 @@ class DataPostgresql implements DataBase
     private $databaseMetaData;
 
     /**
-     * Open a Firebird database connection
+     * Open a PostgreSQL database connection
      * @param bool $persistent
      * @throws \Exception
      */
@@ -48,7 +48,7 @@ class DataPostgresql implements DataBase
     }
 
     /**
-     * Close a Firebird database connection
+     * Close a PostgreSQL database connection
      */
     final public function close(): void
     {
@@ -56,7 +56,7 @@ class DataPostgresql implements DataBase
     }
 
     /**
-     * Execute a firebird query, format is query followed by params or variables
+     * Execute a PostgreSQL query, format is query followed by params or variables
      * @return DataError|bool
      */
     final public function exec()
@@ -76,7 +76,7 @@ class DataPostgresql implements DataBase
     }
 
     /**
-     * Firebird implementation of fetch
+     * PostgreSQL implementation of fetch
      * @param string|array $sql
      * @param int $noOfRecords
      * @param int $offSet
@@ -126,7 +126,7 @@ class DataPostgresql implements DataBase
     }
 
     /**
-     * Auto commit on for Firebird
+     * Auto commit on for PostgreSQL
      * @param bool $onState
      * @return void
      */

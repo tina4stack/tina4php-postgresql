@@ -8,7 +8,7 @@
 namespace Tina4;
 
 /**
- * PostgresqlMetaData retrieves the Firebird metadata from the database
+ * PostgresqlMetaData retrieves the PostgreSQL metadata from the database
  */
 class PostgresqlMetaData extends DataConnection implements DataBaseMetaData
 {

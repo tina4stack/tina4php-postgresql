@@ -9,7 +9,7 @@ namespace Tina4;
 
 /**
  * PostgresqlConnection
- * Establishes a connection to a Firebird database
+ * Establishes a connection to a PostgreSQL database
  */
 class PostgresqlConnection
 {
@@ -20,7 +20,7 @@ class PostgresqlConnection
     private $connection;
 
     /**
-     * Creates a Firebird Database Connection
+     * Creates a PostgreSQL Database Connection
      * @param string $connectionString
      * @param bool $persistent
      */
@@ -34,7 +34,7 @@ class PostgresqlConnection
     }
 
     /**
-     * Returns a databse connection or false if failed
+     * Returns a database connection or false if failed
      * @return false|resource
      */
     final public function getConnection()

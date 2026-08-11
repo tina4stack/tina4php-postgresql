@@ -48,6 +48,7 @@ class PostgresqlQuery extends DataConnection implements DataBaseQuery
         $records = null;
         while ($record = pg_fetch_assoc($recordCursor)) {
             $record = (new PostgresqlBlobHandler($this->getConnection()))->decodeBlobs($record);
+            $record = $this->castRowValues($record, $recordCursor);
             $records[] = (new DataRecord(
                 $record,
                 $fieldMapping,
@@ -93,5 +94,35 @@ class PostgresqlQuery extends DataConnection implements DataBaseQuery
         $error = $this->getConnection()->error();
 
         return (new DataResult($records, $fields, $resultCount["COUNT_RECORDS"], $offSet, $error));
+    }
+
+    /**
+     * Casts PostgreSQL string values returned by pg_fetch_assoc to their native PHP types
+     * based on the column type reported by pg_field_type().
+     * @param array $row A single row from pg_fetch_assoc
+     * @param resource $cursor The PostgreSQL result cursor
+     * @return array Row with integer, float and boolean values properly typed
+     */
+    private function castRowValues(array $row, $cursor): array
+    {
+        $integerTypes = ['int2', 'int4', 'int8', 'oid'];
+        $floatTypes   = ['float4', 'float8', 'numeric'];
+        $fid = 0;
+        foreach ($row as $fieldName => $value) {
+            if ($value === null) {
+                $fid++;
+                continue;
+            }
+            $pgType = pg_field_type($cursor, $fid);
+            if (in_array($pgType, $integerTypes, true)) {
+                $row[$fieldName] = (int) $value;
+            } elseif (in_array($pgType, $floatTypes, true)) {
+                $row[$fieldName] = (float) $value;
+            } elseif ($pgType === 'bool') {
+                $row[$fieldName] = ($value === 't');
+            }
+            $fid++;
+        }
+        return $row;
     }
 }

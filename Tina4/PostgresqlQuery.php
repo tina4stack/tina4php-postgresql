@@ -23,10 +23,10 @@ class PostgresqlQuery extends DataConnection implements DataBaseQuery
     final public function query($sql, int $noOfRecords = 10, int $offSet = 0, array $fieldMapping = []): ?DataResult
     {
         $params = [];
-        if (is_array($sql)) {
+        $sqlIsArray = is_array($sql);
+        if ($sqlIsArray) {
             $initialSQL = $sql[0];
-            $queryName = "tina4".rand(10000,99999).md5($sql[0]);
-            $params = array_merge([$this->getDbh(), $queryName], $sql);
+            $params = $sql;
             $sql = $sql[0];
         } else {
             $initialSQL = $sql;
@@ -39,8 +39,8 @@ class PostgresqlQuery extends DataConnection implements DataBaseQuery
             $sql .= " limit {$noOfRecords} offset {$offSet}";
         }
 
-        if (is_array($sql)) {
-            $recordCursor = pg_query_params(...$params);
+        if ($sqlIsArray) {
+            $recordCursor = pg_query_params($this->getDbh(), $sql, array_slice($params, 1));
         } else {
             $recordCursor = pg_query($this->getDbh(), $sql);
         }
